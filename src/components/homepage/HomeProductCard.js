@@ -1,12 +1,11 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment,  useState } from "react";
 import { useDispatch } from "react-redux";
-import ProductView from "../product/ProductView";
 
 const HomeProductCard = ({ item }) => {
   const [hover, setHover] = useState(false);
   const dispatch = useDispatch();
   function useClickDetail() {
-    dispatch({ type: `product/viewdetail_clicked` });
+    dispatch({ type: `product/viewdetail_clicked`,payload:item });
   }
 
   return (

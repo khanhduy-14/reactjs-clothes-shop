@@ -11,6 +11,7 @@ import { db } from "../../firebase/firebase-config";
 import BannerImageItem from "./BannerImageItem";
 import triangle from "../../assets/images/triangle.png";
 import Spinner from "../Spinner";
+import { Link } from "react-router-dom";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -61,6 +62,7 @@ const Banner = () => {
           <h1 className="text-white text-[56px] font-bold font-mada md:text-[50px] res600:text-[30px] res600:mt-24">
             Get the Latest Models From Us
           </h1>
+          <Link to="/products">
 
           <button
             className="banner-button relative text-white rounded-lg px-8 py-3 font-pop text-bold text-2xl inline-block
@@ -70,6 +72,7 @@ const Banner = () => {
           >
             Shop Now
           </button>
+          </Link>
         </div>
         <div className="banner-swiper w-[480px]  h-[440px] flex items-center justify-center relative res600:w-[320px]">
           {loading && <Spinner />}

@@ -3,6 +3,7 @@ const initialState = {
   loading: false,
   error: undefined,
   viewdetail: false,
+  item: [1],
 };
 
 function productReducer(state = initialState, action) {
@@ -30,6 +31,7 @@ function productReducer(state = initialState, action) {
       return {
         ...state,
         viewdetail: true,
+        item: action.payload,
       };
     case "product/viewdetail_delete":
       return {

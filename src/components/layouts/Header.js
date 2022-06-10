@@ -4,7 +4,7 @@ import { faSearch, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/images/logo_header.png";
 import { NavLink } from "react-router-dom";
 import { collection, onSnapshot } from "firebase/firestore";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { db } from "../../firebase/firebase-config";
 
 const Header = () => {
