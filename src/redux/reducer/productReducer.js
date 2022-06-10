@@ -2,6 +2,7 @@ const initialState = {
   data: [],
   loading: false,
   error: undefined,
+  viewdetail: false,
 };
 
 function productReducer(state = initialState, action) {
@@ -25,7 +26,16 @@ function productReducer(state = initialState, action) {
         loading: false,
         error: action.payload,
       };
-
+    case "product/viewdetail_clicked":
+      return {
+        ...state,
+        viewdetail: true,
+      };
+    case "product/viewdetail_delete":
+      return {
+        ...state,
+        viewdetail: false,
+      };
     default:
       return state;
   }

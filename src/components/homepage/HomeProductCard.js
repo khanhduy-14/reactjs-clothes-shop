@@ -1,32 +1,43 @@
-import React, { useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import ProductView from "../product/ProductView";
 
 const HomeProductCard = ({ item }) => {
   const [hover, setHover] = useState(false);
+  const dispatch = useDispatch();
+  function useClickDetail() {
+    dispatch({ type: `product/viewdetail_clicked` });
+  }
 
   return (
-    <div
-      className="home-product-card bg-white w-[300px] h-[400px] rounded-xl tablet768:w-[240px] res600:w-[320px] res600:h-[500px] res600:object-cover"
-      onMouseOver={() => {
-        setHover(true);
-      }}
-      onMouseLeave={() => {
-        setHover(false);
-      }}
-    >
-      <div className="card-img h-[80%] w-full rounded-t-xl relative pointer-events-none">
-        {hover && <Overlay></Overlay>}
-        <img
-          src={item.image}
-          alt=""
-          className="h-[100%] w-full rounded-t-xl cursor-none"
-        />
-      </div>
+    <Fragment>
+      <div
+        className="home-product-card bg-white shadow-xl border-0 border-solid w-[300px] h-[400px] rounded-xl tablet768:w-[240px] res600:w-[320px] res600:h-[500px] res600:object-cover"
+        onMouseOver={() => {
+          setHover(true);
+        }}
+        onMouseLeave={() => {
+          setHover(false);
+        }}
+        onClick={useClickDetail}
+      >
+        <div className="card-img h-[80%] w-full rounded-t-xl relative pointer-events-none">
+          {hover && <Overlay></Overlay>}
+          <img
+            src={item.image}
+            alt=""
+            className="h-[100%] w-full rounded-t-xl cursor-none"
+          />
+        </div>
 
-      <div className="card-info flex flex-col items-center justify-center h-[20%] pointer-events-none">
-        <h3 className="text-lg text-pop text-black text-center">{item.name}</h3>
-        <span className="text-2xl text-mada text-[#48CFAD]">$39</span>
+        <div className="card-info flex flex-col items-center justify-center h-[20%] pointer-events-none">
+          <h3 className="text-lg text-pop text-black text-center">
+            {item.name}
+          </h3>
+          <span className="text-2xl text-mada text-[#48CFAD]">$39</span>
+        </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 function handleButtonLeave(e) {

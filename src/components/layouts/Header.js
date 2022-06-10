@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logo from "../../assets/images/logo_header.png";
 import { faSearch, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import logo from "../../assets/images/logo_header.png";
 import { NavLink } from "react-router-dom";
+import { collection, onSnapshot } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+import { db } from "../../firebase/firebase-config";
+
 const Header = () => {
+  const colRef = collection(db, "product");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: `product/fetch_request` });
+
+    let dataProduct = [];
+    onSnapshot(colRef, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        dataProduct.push({ id: doc.id, ...doc.data() });
+      });
+      dispatch({ type: "product/fetch_success", payload: dataProduct });
+    });
+  }, [dispatch]);
+
   return (
     <header
       className="header absolute h-[80px] rounded-lg bg-white w-[95%] mt-5 left-[50%] translate-x-[-50%] z-[100]  flex justify-between items-center
@@ -11,12 +30,12 @@ const Header = () => {
     >
       <NavLink
         to="/"
-        className="h-[100%] tablet768:w-[80px] res600:h-[120px] res600:w-[240px]"
+        className="h-[100%] tablet768:w-[80px] res600:h-[120px] res600:w-[240px] rounded-l-lg"
       >
         <img
           src={logo}
           alt=""
-          className="header-img h-[100%] tablet768:w-[80px] res600:h-[120px] res600:w-[320px]"
+          className="header-img h-[100%] tablet768:w-[80px] res600:h-[120px] res600:w-[320px] rounded-l-lg"
         />
       </NavLink>
       <div

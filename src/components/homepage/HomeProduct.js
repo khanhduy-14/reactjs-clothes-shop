@@ -1,35 +1,22 @@
-import { collection, onSnapshot } from "firebase/firestore";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { db } from "../../firebase/firebase-config";
+import React from "react";
 import SwiperCore, { Navigation } from "swiper";
 import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/scss/navigation";
-
 import "./swiper.scss";
 import "swiper/scss";
 import Spinner from "../Spinner";
 import HomeProductCard from "./HomeProductCard";
+import ProductView from "../product/ProductView";
+import { useSelector } from "react-redux";
 
 SwiperCore.use([Navigation]);
 
 const HomeProduct = () => {
-  const { data: product, loading } = useSelector((state) => state.productState);
-  const dispatch = useDispatch();
-
-  const colRef = collection(db, "product");
-
-  useEffect(() => {
-    dispatch({ type: `product/fetch_request` });
-
-    let dataProduct = [];
-    onSnapshot(colRef, (snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        dataProduct.push({ id: doc.id, ...doc.data() });
-      });
-      dispatch({ type: "product/fetch_success", payload: dataProduct });
-    });
-  }, [dispatch]);
+  const {
+    data: product,
+    loading,
+    viewdetail,
+  } = useSelector((state) => state.productState);
 
   return (
     <div className="home-product relative bg-gradient-to-r from-violet-500 to-fuchsia-500 h-[660px] flex flex-col justify-center items-center res600:h-[800px]">
@@ -37,6 +24,7 @@ const HomeProduct = () => {
         Our Best Seller Product
       </h1>
       {loading && <Spinner />}
+      {viewdetail && <ProductView></ProductView>}
       <div className="product-swiper flex items-center justify-center w-[630px] h-full mx-0 tablet768:w-[540px] res600:w-[320px] res600:h-[80%]">
         <Swiper
           grabCursor={"true"}
