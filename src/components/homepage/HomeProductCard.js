@@ -1,11 +1,11 @@
-import React, { Fragment,  useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 
 const HomeProductCard = ({ item }) => {
   const [hover, setHover] = useState(false);
   const dispatch = useDispatch();
   function useClickDetail() {
-    dispatch({ type: `product/viewdetail_clicked`,payload:item });
+    dispatch({ type: `product/viewdetail_clicked`, payload: item });
   }
 
   return (
@@ -33,7 +33,9 @@ const HomeProductCard = ({ item }) => {
           <h3 className="text-lg text-pop text-black text-center">
             {item.name}
           </h3>
-          <span className="text-2xl text-mada text-[#48CFAD]">$39</span>
+          <span className="text-2xl text-mada text-[#48CFAD]">
+            {item.price}$
+          </span>
         </div>
       </div>
     </Fragment>

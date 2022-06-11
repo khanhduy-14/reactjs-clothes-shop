@@ -4,6 +4,8 @@ const initialState = {
   error: undefined,
   viewdetail: false,
   item: [1],
+  chooseColor: null,
+  chooseSize: null,
 };
 
 function productReducer(state = initialState, action) {
@@ -38,6 +40,23 @@ function productReducer(state = initialState, action) {
         ...state,
         viewdetail: false,
       };
+    case "product/choose_color":
+      return {
+        ...state,
+        chooseColor: action.payload,
+      };
+    case "product/choose_size":
+      return {
+        ...state,
+        chooseSize: action.payload,
+      };
+    case "product/addtocard":
+      return {
+        ...state,
+        chooseColor: null,
+        chooseSize: null,
+      };
+
     default:
       return state;
   }
