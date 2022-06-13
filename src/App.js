@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import rootReducers from "./redux/reducer/rootReducer";
 import { auth, handleUserProfile } from "./firebase/firebase-config";
 import { Component } from "react";
+import SignupPage from "./pages/SignupPage";
 // import { render } from "@headlessui/react/dist/utils/render";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -80,6 +81,16 @@ class App extends Component {
                   )
                 }
               ></Route>
+                <Route
+              path="/signup"
+              element={
+                  currentUser ? (
+                    <Navigate replace to="/" />
+                  ) : (
+                    <SignupPage> </SignupPage>
+                  )
+                }
+            ></Route>
             </Route>
           </Routes>
         </Suspense>

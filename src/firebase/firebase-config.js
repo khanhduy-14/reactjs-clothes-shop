@@ -27,7 +27,7 @@ export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider);
 
 export const handleUserProfile = async ({ userAuth, additionalData }) => {
   if (!userAuth) {
-    console.warn("No userAuth provided!");
+    // console.warn("No userAuth provided!");
     return;
   }
   const { uid } = userAuth;
