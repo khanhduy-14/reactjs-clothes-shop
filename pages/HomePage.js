@@ -8,7 +8,7 @@ const HomePage = () => {
     <Fragment>
       <Banner></Banner>
       <Service></Service>
-      {/* <HomeProduct></HomeProduct> */}
+      <HomeProduct></HomeProduct>
       <HomeAdver></HomeAdver>
     </Fragment>
   );

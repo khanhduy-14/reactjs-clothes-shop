@@ -7,7 +7,7 @@ import "swiper/scss/pagination";
 import "./swiper.scss";
 import "swiper/scss";
 import { collection, onSnapshot } from "firebase/firestore";
-// import { db } from "../../firebase/firebase-config";
+import { db } from "../../firebase/firebase-config";
 import BannerImageItem from "./BannerImageItem";
 import triangle from "../../assets/images/triangle.png";
 import Spinner from "../Spinner";
@@ -16,22 +16,22 @@ import { Link } from "react-router-dom";
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Banner = () => {
-  // const { data: trend, loading } = useSelector((state) => state.trendState);
-  // const dispatch = useDispatch();
+  const { data: trend, loading } = useSelector((state) => state.trendState);
+  const dispatch = useDispatch();
 
-  // const colRef = collection(db, "trendShoes");
+  const colRef = collection(db, "trendShoes");
 
-  // useEffect(() => {
-  //   dispatch({ type: `trend/fetch_request` });
+  useEffect(() => {
+    dispatch({ type: `trend/fetch_request` });
 
-  //   let dataLink = [];
-  //   onSnapshot(colRef, (snapshot) => {
-  //     snapshot.docs.forEach((doc) => {
-  //       dataLink.push({ id: doc.id, ...doc.data() });
-  //     });
-  //     dispatch({ type: "trend/fetch_success", payload: dataLink });
-  //   });
-  // }, [dispatch]);
+    let dataLink = [];
+    onSnapshot(colRef, (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        dataLink.push({ id: doc.id, ...doc.data() });
+      });
+      dispatch({ type: "trend/fetch_success", payload: dataLink });
+    });
+  }, [dispatch]);
 
   return (
     <div className="home-main relative bg-gradient-to-r from-violet-500 to-fuchsia-500 h-[660px] md:h-[780px] res600:h-[1000px] ">
@@ -74,7 +74,7 @@ const Banner = () => {
           </button>
           </Link>
         </div>
-        {/* <div className="banner-swiper w-[480px]  h-[440px] flex items-center justify-center relative res600:w-[320px]">
+        <div className="banner-swiper w-[480px]  h-[440px] flex items-center justify-center relative res600:w-[320px]">
           {loading && <Spinner />}
           <Swiper
             grabCursor={"true"}
@@ -93,7 +93,7 @@ const Banner = () => {
                 </SwiperSlide>
               ))}
           </Swiper>
-        </div> */}
+        </div>
       </div>
     </div>
   );
