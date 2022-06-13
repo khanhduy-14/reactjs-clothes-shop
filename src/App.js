@@ -10,41 +10,33 @@ import { auth, handleUserProfile } from "./firebase/firebase-config";
 import { Component } from "react";
 import SignupPage from "./pages/SignupPage";
 // import { render } from "@headlessui/react/dist/utils/render";
+import RecoveryPage from "./pages/RecoveryPage";
+import { setCurrentUser } from "./redux2/User/userActions";
+import { connect } from "react-redux";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
 
-const initialState = {
-  currentUser: null,
-};
 
 class App extends Component {
   // const store = createStore(rootReducers);
-  constructor(props) {
-    super(props);
-    this.state = {
-      ...initialState,
-    };
-  }
+
 
   authListener = null;
 
   componentDidMount() {
+    const {setCurrentUser} =this.props;
     this.authListener = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
-        const userRef = await handleUserProfile({userAuth});
-        userRef.onSnapshot(snapshot=> {
-          this.setState({
-            currentUser: {
-              id: snapshot.id,
-              ...snapshot.data(),
-            },
-          });
+        const userRef = await handleUserProfile({ userAuth });
+        userRef.onSnapshot((snapshot) => {
+        setCurrentUser({
+          id: snapshot.id,
+          ...snapshot.data()
+        })
         });
       }
-      this.setState({
-        ...initialState,
-      });
+      setCurrentUser(userAuth);
     });
   }
 
@@ -53,12 +45,12 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser } = this.state;
+    const { currentUser } = this.props;
     return (
       <Fragment>
         <Suspense fallback={<Spinner></Spinner>}>
           <Routes>
-            <Route element={<Main currentUser={currentUser}></Main>}>
+            <Route element={<Main></Main>}>
               <Route
                 path="/"
                 element={
@@ -81,16 +73,20 @@ class App extends Component {
                   )
                 }
               ></Route>
-                <Route
-              path="/signup"
-              element={
+              <Route
+                path="/signup"
+                element={
                   currentUser ? (
                     <Navigate replace to="/" />
                   ) : (
                     <SignupPage> </SignupPage>
                   )
                 }
-            ></Route>
+              ></Route>
+              <Route
+                path="/recovery"
+                element={<RecoveryPage></RecoveryPage>}
+              ></Route>
             </Route>
           </Routes>
         </Suspense>
@@ -105,4 +101,11 @@ function useScrollToTop() {
     window.scrollTo(0, 0);
   }, [pathname]);
 }
-export default App;
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

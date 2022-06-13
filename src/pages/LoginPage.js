@@ -65,11 +65,17 @@ class LoginPage extends Component {
             Sign in
           </button>
         </form>
-        <div>
+        <div className="flex flex-col gap-3">
+        <Link to="/recovery">
+            <span className="text-blue-500">You forgot password?</span>
+          </Link>
+          <div>
+
           <span>You don't have accout? Please </span>
           <Link to="/signup">
             <span className="text-blue-500">sign up</span>
           </Link>
+          </div>
         </div>
       </div>
     );

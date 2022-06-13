@@ -1,18 +1,15 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSearch,
-  faShoppingCart,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart, faUser } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/images/logo_header.png";
 import { Link, NavLink } from "react-router-dom";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useDispatch } from "react-redux";
-import {auth} from './../../firebase/firebase-config';
+import { auth } from "./../../firebase/firebase-config";
+import {connect} from 'react-redux';
 // import { db } from "../../firebase/firebase-config";
 
-const Header = ({currentUser}) => {
+const Header = ({ currentUser }) => {
   // const colRef = collection(db, "product");
   // const dispatch = useDispatch();
 
@@ -71,18 +68,15 @@ const Header = ({currentUser}) => {
         </span>
       </div>
       <div className="header-icon flex justify-end items-center res600:mb-5">
-      {!currentUser&&(
-        <Link to="/login">
-          <FontAwesomeIcon
-            className="text-xl mr-5"
-            icon={faUser}
-          ></FontAwesomeIcon>
-        </Link>
-      )}
-        {
-          currentUser&&
-          <span onClick={()=>auth.signOut()}>Log Out</span>
-        }
+        {!currentUser && (
+          <Link to="/login">
+            <FontAwesomeIcon
+              className="text-xl mr-5"
+              icon={faUser}
+            ></FontAwesomeIcon>
+          </Link>
+        )}
+        {currentUser && <span onClick={() => auth.signOut()}>Log Out</span>}
         <FontAwesomeIcon
           className="text-white rounded-[50%] text-xl p-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 mr-5"
           icon={faShoppingCart}
@@ -98,7 +92,11 @@ function handleTabLeave(e) {
 function handleTabEnter(e) {
   e.target.classList.add("border-b-2", "border-[#A055F4]", "pb-2");
 }
-Header.defaultProps={
-  currentUser:null
-}
-export default Header;
+Header.defaultProps = {
+  currentUser: null,
+};
+const mapStateToProps=({user})=>({
+  currentUser: user.currentUser
+});
+
+export default connect(mapStateToProps,null)(Header);
