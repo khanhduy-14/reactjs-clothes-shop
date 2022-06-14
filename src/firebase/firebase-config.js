@@ -23,7 +23,6 @@ export const firestore = firebase.firestore();
 
 export const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 GoogleProvider.setCustomParameters({ prompt: "select_account" });
-export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider);
 
 export const handleUserProfile = async ({ userAuth, additionalData }) => {
   if (!userAuth) {
@@ -54,4 +53,13 @@ export const handleUserProfile = async ({ userAuth, additionalData }) => {
   }
 
   return userRef;
+};
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
 };

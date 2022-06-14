@@ -6,20 +6,20 @@ import ProductView from "../components/product/ProductView";
 import CartItems from "../components/cart/CartItems";
 
 const ProductPage = () => {
-  const dispatch = useDispatch();
-  const {
-    data: product,
-    loading,
-    viewdetail,
-  } = useSelector((state) => state.productState);
-  const dataCart = useSelector((state) => state.cartState);
-  const cartPrice = dataCart.cartItems.reduce(
-    (a, c) => a + c.price * c.quantity,
-    0
-  );
-  function handleClearCart() {
-    dispatch({ type: `cart/clear` });
-  }
+  // const dispatch = useDispatch();
+  // const {
+  //   data: product,
+  //   loading,
+  //   viewdetail,
+  // } = useSelector((state) => state.productState);
+  // const dataCart = useSelector((state) => state.cartState);
+  // const cartPrice = dataCart.cartItems.reduce(
+  //   (a, c) => a + c.price * c.quantity,
+  //   0
+  // );
+  // function handleClearCart() {
+  //   dispatch({ type: `cart/clear` });
+  // }
   return (
     <div>
       <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 h-[200px] flex flex-col justify-center items-center ">
@@ -28,7 +28,7 @@ const ProductPage = () => {
           SHOP
         </span>
       </div>
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />}
       {viewdetail && <ProductView></ProductView>}
       <div className="flex justify-center">
         <div className="grid grid-cols-3 gap-10 h-[900px] mt-10 ml-5">
@@ -76,7 +76,7 @@ const ProductPage = () => {
             </button>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

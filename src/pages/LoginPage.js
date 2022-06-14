@@ -1,39 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { auth, signInWithGoogle } from "./../firebase/firebase-config";
 import FormInput from "../components/forms/FormInput";
-import { signInUser } from "./../redux2/User/userActions";
+import { emailSignInStart, googleSignInStart } from "./../redux2/User/userActions";
 
 const mapState = ({ user }) => ({
-  signInSuccess: user.signInSuccess,
+  currentUser: user.currentUser,
 });
 const LoginPage = (props) => {
-  const { signInSuccess } = useSelector(mapState);
+  const { currentUser } = useSelector(mapState);
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (signInSuccess) {
+    if (currentUser) {
       resetForm();
       window.location.href = "/";
     }
-  }, [signInSuccess]);
+  }, [currentUser]);
   const resetForm = () => {
     setEmail("");
     setPassword("");
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signInUser({email, password}));
+    dispatch(emailSignInStart({ email, password }));
   };
-
+  const handleGoogleSignIn = () => {
+    dispatch(googleSignInStart());
+  };
   return (
     <div className="flex h-[400px] w-full items-center justify-center flex-col gap-3">
       <div
         className="px-14 py-3 text-black text-xl border-[1px] border-solid border-black rounded-xl"
-        onClick={signInWithGoogle}
+        onClick={handleGoogleSignIn}
       >
         Login with google
       </div>

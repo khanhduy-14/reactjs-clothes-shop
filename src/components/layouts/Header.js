@@ -4,15 +4,14 @@ import { faShoppingCart, faUser } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/images/logo_header.png";
 import { Link, NavLink } from "react-router-dom";
 import { collection, onSnapshot } from "firebase/firestore";
-import { useDispatch } from "react-redux";
 import { auth } from "./../../firebase/firebase-config";
-import {useSelector} from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
+import { signOutUserStart } from "./../../redux2/User/userActions";
 // import { db } from "../../firebase/firebase-config";
 
-const mapState=({user})=>({
-  currentUser: user.currentUser
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser,
 });
-
 
 const Header = () => {
   // const colRef = collection(db, "product");
@@ -29,7 +28,13 @@ const Header = () => {
   //     dispatch({ type: "product/fetch_success", payload: dataProduct });
   //   });
   // }, [dispatch]);
-  const {currentUser}=useSelector(mapState);
+  const { currentUser } = useSelector(mapState);
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    dispatch(signOutUserStart());
+    window.location.href = "/";
+  };
   return (
     <header
       className="header absolute h-[80px] rounded-lg bg-white w-[95%] mt-5 left-[50%] translate-x-[-50%] z-[100]  flex justify-between items-center
@@ -81,7 +86,7 @@ const Header = () => {
             ></FontAwesomeIcon>
           </Link>
         )}
-        {currentUser && <span onClick={() => auth.signOut()}>Log Out</span>}
+        {currentUser && <span onClick={() => signOut()}>Log Out</span>}
         <FontAwesomeIcon
           className="text-white rounded-[50%] text-xl p-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 mr-5"
           icon={faShoppingCart}
