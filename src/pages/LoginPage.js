@@ -1,85 +1,74 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { auth, signInWithGoogle } from "./../firebase/firebase-config";
 import FormInput from "../components/forms/FormInput";
+import { signInUser } from "./../redux2/User/userActions";
 
-const initialState = {
-  email: "",
-  password: "",
-};
+const mapState = ({ user }) => ({
+  signInSuccess: user.signInSuccess,
+});
+const LoginPage = (props) => {
+  const { signInSuccess } = useSelector(mapState);
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-class LoginPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ...initialState,
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
-  }
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    const { email, password } = this.state;
-
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      this.setState({
-        ...initialState,
-      });
-    } catch (err) {
-      // console.log(err);
+  useEffect(() => {
+    if (signInSuccess) {
+      resetForm();
+      window.location.href = "/";
     }
+  }, [signInSuccess]);
+  const resetForm = () => {
+    setEmail("");
+    setPassword("");
   };
-  render() {
-    const { email, password } = this.state;
-    return (
-      <div className="flex h-[400px] w-full items-center justify-center flex-col gap-3">
-        <div
-          className="px-14 py-3 text-black text-xl border-[1px] border-solid border-black rounded-xl"
-          onClick={signInWithGoogle}
-        >
-          Login with google
-        </div>
-        <form onSubmit={this.handleSubmit}>
-          <FormInput
-            type="email"
-            name="email"
-            value={email}
-            placeholder="Email"
-            handleChange={this.handleChange}
-          />
-          <FormInput
-            type="password"
-            name="password"
-            value={password}
-            placeholder="Password"
-            handleChange={this.handleChange}
-          />
-          <button className="px-8 py-4 border-2 border-solid border-black">
-            Sign in
-          </button>
-        </form>
-        <div className="flex flex-col gap-3">
-        <Link to="/recovery">
-            <span className="text-blue-500">You forgot password?</span>
-          </Link>
-          <div>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(signInUser({email, password}));
+  };
 
+  return (
+    <div className="flex h-[400px] w-full items-center justify-center flex-col gap-3">
+      <div
+        className="px-14 py-3 text-black text-xl border-[1px] border-solid border-black rounded-xl"
+        onClick={signInWithGoogle}
+      >
+        Login with google
+      </div>
+      <form onSubmit={handleSubmit}>
+        <FormInput
+          type="email"
+          name="email"
+          value={email}
+          placeholder="Email"
+          handleChange={(e) => setEmail(e.target.value)}
+        />
+        <FormInput
+          type="password"
+          name="password"
+          value={password}
+          placeholder="Password"
+          handleChange={(e) => setPassword(e.target.value)}
+        />
+        <button className="px-8 py-4 border-2 border-solid border-black">
+          Sign in
+        </button>
+      </form>
+      <div className="flex flex-col gap-3">
+        <Link to="/recovery">
+          <span className="text-blue-500">You forgot password?</span>
+        </Link>
+        <div>
           <span>You don't have accout? Please </span>
           <Link to="/signup">
             <span className="text-blue-500">sign up</span>
           </Link>
-          </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default LoginPage;

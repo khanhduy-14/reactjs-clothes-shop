@@ -17,83 +17,56 @@ import { connect } from "react-redux";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
 
+const App = (props) => {
+  const { setCurrentUser, currentUser } = props;
 
-class App extends Component {
-  // const store = createStore(rootReducers);
-
-
-  authListener = null;
-
-  componentDidMount() {
-    const {setCurrentUser} =this.props;
-    this.authListener = auth.onAuthStateChanged(async (userAuth) => {
+  useEffect(() => {
+    const authListener = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await handleUserProfile({ userAuth });
         userRef.onSnapshot((snapshot) => {
-        setCurrentUser({
-          id: snapshot.id,
-          ...snapshot.data()
-        })
+          setCurrentUser({
+            id: snapshot.id,
+            ...snapshot.data(),
+          });
         });
       }
       setCurrentUser(userAuth);
     });
-  }
+    return () => {
+      authListener();
+    };
+  }, []);
 
-  componentWillUnmount() {
-    this.authListener();
-  }
-
-  render() {
-    const { currentUser } = this.props;
-    return (
-      <Fragment>
-        <Suspense fallback={<Spinner></Spinner>}>
-          <Routes>
-            <Route element={<Main></Main>}>
-              <Route
-                path="/"
-                element={
-                  <>
-                    <HomePage></HomePage>
-                  </>
-                }
-              ></Route>
-              {/* <Route
+  return (
+    <Fragment>
+      <Suspense fallback={<Spinner></Spinner>}>
+        <Routes>
+          <Route element={<Main></Main>}>
+            <Route
+              path="/"
+              element={
+                <>
+                  <HomePage></HomePage>
+                </>
+              }
+            ></Route>
+            {/* <Route
               path="/products"
               element={<ProductPage></ProductPage>}
             ></Route> */}
-              <Route
-                path="/login"
-                element={
-                  currentUser ? (
-                    <Navigate replace to="/" />
-                  ) : (
-                    <LoginPage> </LoginPage>
-                  )
-                }
-              ></Route>
-              <Route
-                path="/signup"
-                element={
-                  currentUser ? (
-                    <Navigate replace to="/" />
-                  ) : (
-                    <SignupPage> </SignupPage>
-                  )
-                }
-              ></Route>
-              <Route
-                path="/recovery"
-                element={<RecoveryPage></RecoveryPage>}
-              ></Route>
-            </Route>
-          </Routes>
-        </Suspense>
-      </Fragment>
-    );
-  }
-}
+            <Route path="/login" element={<LoginPage> </LoginPage>}></Route>
+            <Route path="/signup" element={<SignupPage> </SignupPage>}></Route>
+            <Route
+              path="/recovery"
+              element={<RecoveryPage></RecoveryPage>}
+            ></Route>
+          </Route>
+        </Routes>
+      </Suspense>
+    </Fragment>
+  );
+};
 function useScrollToTop() {
   const { pathname } = useLocation();
 

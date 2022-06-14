@@ -6,10 +6,15 @@ import { Link, NavLink } from "react-router-dom";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { auth } from "./../../firebase/firebase-config";
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 // import { db } from "../../firebase/firebase-config";
 
-const Header = ({ currentUser }) => {
+const mapState=({user})=>({
+  currentUser: user.currentUser
+});
+
+
+const Header = () => {
   // const colRef = collection(db, "product");
   // const dispatch = useDispatch();
 
@@ -24,7 +29,7 @@ const Header = ({ currentUser }) => {
   //     dispatch({ type: "product/fetch_success", payload: dataProduct });
   //   });
   // }, [dispatch]);
-
+  const {currentUser}=useSelector(mapState);
   return (
     <header
       className="header absolute h-[80px] rounded-lg bg-white w-[95%] mt-5 left-[50%] translate-x-[-50%] z-[100]  flex justify-between items-center
@@ -95,8 +100,5 @@ function handleTabEnter(e) {
 Header.defaultProps = {
   currentUser: null,
 };
-const mapStateToProps=({user})=>({
-  currentUser: user.currentUser
-});
 
-export default connect(mapStateToProps,null)(Header);
+export default Header;
