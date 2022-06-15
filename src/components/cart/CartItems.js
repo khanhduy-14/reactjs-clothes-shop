@@ -2,23 +2,28 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
+import { viewProduct } from "../../redux2/Products/productAction";
+import {
+  deleteCartOne,
+  addCartOne,
+  minusCartOne,
+} from "../../redux2/Cart/cartAction";
 
 const CartItems = ({ item }) => {
   const dispatch = useDispatch();
-  const dataCard = useSelector((state) => state.cartState);
   function handleDeleteCartItem() {
-    dispatch({ type: `card/delete_item`, payload: item });
+    dispatch(deleteCartOne(item));
   }
   function handleClickPlus() {
-    dispatch({ type: `card/add_one`, payload: item });
+    dispatch(addCartOne(item));
   }
   function handleClickMinus(e) {
     if (item.quantity > 1) {
-      dispatch({ type: `card/minus_one`, payload: item });
+      dispatch(minusCartOne(item));
     }
   }
   function handleClickImage() {
-    dispatch({ type: `product/viewdetail_clicked`, payload: item });
+    dispatch(viewProduct(item));
   }
   return (
     <div className="cart-item flex gap-3 justify-around items-center border-b-2 pb-2 mt-2 ">

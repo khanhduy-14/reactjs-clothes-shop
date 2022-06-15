@@ -1,31 +1,14 @@
-const initialState = {
+import cartType from "./cartType";
+
+const INITIAL_STATE = {
   cartItems: [],
-  loading: false,
-  error: undefined,
+  viewCart: false,
+  countItems: 0,
 };
 
-function cardReducer(state = initialState, action) {
+const cartReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "card/add_request":
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case "card/add_success":
-      return {
-        ...state,
-        loading: false,
-        cartItems: [...state.cartItems, action.payload],
-      };
-
-    case "card/add_error":
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
-    case "card/add_one":
+    case cartType.ADD_CART_ONE:
       return {
         ...state,
         cartItems: state.cartItems.map((product) => {
@@ -42,18 +25,7 @@ function cardReducer(state = initialState, action) {
           return product;
         }),
       };
-    case "card/delete_item":
-      return {
-        ...state,
-        cartItems: state.cartItems.filter(
-          (product) =>
-            product.id + product.chooseSize + product.chooseColor !==
-            action.payload.id +
-              action.payload.chooseSize +
-              action.payload.chooseColor
-        ),
-      };
-    case "card/minus_one":
+    case cartType.MINUS_CART_ONE:
       return {
         ...state,
         cartItems: state.cartItems.map((product) => {
@@ -70,14 +42,43 @@ function cardReducer(state = initialState, action) {
           return product;
         }),
       };
-    case "cart/clear":
+    case cartType.ADD_CART_NEW:
+      return {
+        ...state,
+        cartItems: [...state.cartItems, action.payload],
+        countItems: state.countItems + 1,
+      };
+    case cartType.DELETE_CART_ONE:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter(
+          (product) =>
+            product.id + product.chooseSize + product.chooseColor !==
+            action.payload.id +
+              action.payload.chooseSize +
+              action.payload.chooseColor
+        ),
+        countItems: state.countItems - 1,
+      };
+    case cartType.VIEW_CART:
+      return {
+        ...state,
+        viewCart: true,
+      };
+    case cartType.ClOSE_CART:
+      return {
+        ...state,
+        viewCart: false,
+      };
+    case cartType.CLEAR_CART:
       return {
         ...state,
         cartItems: [],
+        countItems: 0,
       };
     default:
       return state;
   }
-}
+};
 
-export default cardReducer;
+export default cartReducer;

@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-
+import { chooseSize } from "../../redux2/Products/productAction";
 const ProductSize = ({ item }) => {
   const dispatch=useDispatch();
   function handleOrderSize(e) {
@@ -9,7 +9,7 @@ const ProductSize = ({ item }) => {
     if (checkNode)
       checkNode.classList.remove("border-4", "border-solid", "border-blue-600");
     e.target.classList.add("border-4", "border-solid", "border-blue-600");
-    dispatch({type:`product/choose_size`,payload: item})
+    dispatch(chooseSize(item));
   }
   return (
     <div

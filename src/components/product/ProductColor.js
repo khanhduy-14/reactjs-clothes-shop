@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useDispatch } from "react-redux";
-
+import { chooseColor } from "../../redux2/Products/productAction";
 const ProductColor = ({ item }) => {
   const dispatch = useDispatch();
   function handleOrderColor(e) {
@@ -9,7 +9,7 @@ const ProductColor = ({ item }) => {
     if (checkNode)
       checkNode.classList.remove("border-4", "border-solid", "border-blue-600");
     e.target.classList.add("border-4", "border-solid", "border-blue-600");
-    dispatch({ type: `product/choose_color`, payload: item });
+    dispatch(chooseColor(item));
   }
 
   return (

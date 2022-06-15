@@ -5,6 +5,7 @@ import Main from "./components/layouts/Main";
 import Spinner from "./components/Spinner";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import AdminPage from "./pages/AdminPage";
 // import { render } from "@headlessui/react/dist/utils/render";
 import RecoveryPage from "./pages/RecoveryPage";
 import { checkUserSession } from "./redux2/User/userActions";
@@ -13,6 +14,7 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
 
 const App = (props) => {
+  useScrollToTop();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,6 +44,7 @@ const App = (props) => {
               path="/recovery"
               element={<RecoveryPage></RecoveryPage>}
             ></Route>
+            <Route path="/admin" element={<AdminPage></AdminPage>}></Route>
           </Route>
         </Routes>
       </Suspense>
