@@ -1,24 +1,52 @@
 import { firestore } from "./../../firebase/firebase-config";
+export const handleAddProduct = (product) => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("product")
+      .doc()
+      .set(product)
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
 
 export const handleFetchProducts = () => {
   return new Promise((resolve, reject) => {
     firestore
-      .collection('product')
+      .collection("product")
       .get()
-      .then(snapshot => {
-        const productsArray = snapshot.docs.map(doc => {
+      .then((snapshot) => {
+        const productsArray = snapshot.docs.map((doc) => {
           return {
             ...doc.data(),
-            id: doc.id
-          }
+            id: doc.id,
+          };
         });
         resolve(productsArray);
       })
-      .catch(err => {
+      .catch((err) => {
         reject(err);
+      });
+  });
+};
+
+export const handleDeleteProduct = (documentID) => {
+  console.log(documentID, 1);
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("product")
+      .doc(documentID)
+      .delete()
+      .then(() => {
+        console.log(documentID, 2);
+        resolve();
       })
-  })
-}
-
-
-
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};

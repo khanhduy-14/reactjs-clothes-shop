@@ -18,7 +18,6 @@ const RecoveryPage = (props) => {
   useEffect(() => {
     if (resetPasswordSuccess) {
       window.location.href = "/login";
-    
     }
   }, [resetPasswordSuccess]);
 
@@ -33,25 +32,40 @@ const RecoveryPage = (props) => {
   };
 
   return (
-    <div className="flex h-[400px] w-full items-center justify-center flex-col gap-3">
-      {errors.length > 0 &&
-        errors.map((item, index) => <span key={index}>{item}</span>)}
-      <form onSubmit={handleFormSubmit}>
-        <FormInput
-          type="email"
-          name="email"
-          value={email}
-          placeholder="Email"
-          handleChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
+    <>
+      <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 h-[200px] flex flex-col justify-center items-center res600:h-[600px] ">
+        <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 h-[50%] w-full"></div>
+        <span className="text-pop text-[40px] text- font-bold text-white">
+          RECOVERY
+        </span>
+      </div>
 
-        <button className="px-8 py-4 border-2 border-solid border-black">
-          Reset Password
-        </button>
-      </form>
-    </div>
+      <div className="flex h-[330px] p-5 border-black w-full items-center justify-center flex-col gap-4">
+        {errors.length > 0 &&
+          errors.map((item, index) => (
+            <span className="font-bold font-mada text-xl" key={index}>
+              {item}
+            </span>
+          ))}
+        <form onSubmit={handleFormSubmit} className="flex flex-col gap-3">
+          <FormInput
+            type="email"
+            name="email"
+            value={email}
+            placeholder="Email"
+            handleChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+          />
+          <div className="flex justify-center">
+            <button className="res600:self-center res600:mx-auto shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-center px-8 py-3 rounded-xl hover:opacity-80">
+              Reset Password
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 

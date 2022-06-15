@@ -47,18 +47,27 @@ const SignupPage = (props) => {
   };
 
   return (
+    <> 
+     <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 h-[200px] flex flex-col justify-center items-center res600:h-[600px] ">
+        <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 h-[50%] w-full"></div>
+        <span className="text-pop text-[40px] text- font-bold text-white">
+          SIGN UP 
+        </span>
+      </div>
     <div className="flex h-[400px] w-full items-center justify-center flex-col gap-3">
       {errors.length > 0 &&
         errors.map((err, index) => {
-          return <span key={index}>{err}</span>;
+          return <span className="font-bold font-mada text-xl" key={index}>{err}</span>;
         })}
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleFormSubmit} className="flex flex-col gap-3">
         <FormInput
           type="email"
           name="email"
           value={email}
           placeholder="Email"
           handleChange={(e) => setEmail(e.target.value)}
+          className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+
         />
         <FormInput
           type="password"
@@ -66,6 +75,8 @@ const SignupPage = (props) => {
           value={password}
           placeholder="Password"
           handleChange={(e) => setPassword(e.target.value)}
+          className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+
         />
         <FormInput
           type="password"
@@ -73,12 +84,17 @@ const SignupPage = (props) => {
           value={confirmPassword}
           placeholder="Confirm Password"
           handleChange={(e) => setConfirmPassWord(e.target.value)}
+          className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+
         />
-        <button className="px-8 py-4 border-2 border-solid border-black">
-          Register
-        </button>
+        <div className="flex justify-center">
+            <button className="res600:self-center res600:mx-auto shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-center px-8 py-3 rounded-xl hover:opacity-80">
+              Sign Up
+            </button>
+          </div>
       </form>
     </div>
+    </>
   );
 };
 

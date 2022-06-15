@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SwiperCore, { Navigation } from "swiper";
 import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/scss/navigation";
@@ -19,17 +19,11 @@ const mapState = ({ productsData }) => ({
   loading: productsData.loading,
 });
 const HomeProduct = () => {
-  const { products, viewProduct,loading } = useSelector(mapState);
+  const { products, viewProduct, loading } = useSelector(mapState);
 
-  // useEffect(() => {
-  //   dispatch(setProducts(products));
-  // }, []);
-  // const {
-  //   data: product,
-  //   loading,
-  //   viewdetail,
-  // } = useSelector((state) => state.productState);
 
+ 
+  
   return (
     <div className="home-product relative bg-gradient-to-r from-violet-500 to-fuchsia-500 h-[660px] flex flex-col justify-center items-center res600:h-[800px]">
       <h1 className="text-white text-[56px] font-bold font-mada mt-10 md:text-[30px] ">

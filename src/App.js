@@ -6,7 +6,6 @@ import Spinner from "./components/Spinner";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import AdminPage from "./pages/AdminPage";
-// import { render } from "@headlessui/react/dist/utils/render";
 import RecoveryPage from "./pages/RecoveryPage";
 import { checkUserSession } from "./redux2/User/userActions";
 

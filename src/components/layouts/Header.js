@@ -90,29 +90,38 @@ const Header = () => {
             About
           </span>
           <span onMouseOver={handleTabEnter} onMouseLeave={handleTabLeave}>
-            Support
+            Contact
           </span>
         </div>
-        <div className="header-icon flex justify-end items-center res600:mb-5">
+        <div className="header-icon flex justify-end items-center res600:mb-5 cursor-pointer">
           {!currentUser && (
             <Link to="/login">
               <FontAwesomeIcon
-                className="text-xl mr-5"
+                className="text-xl mr-5 hover:text-violet-500 "
                 icon={faUser}
               ></FontAwesomeIcon>
             </Link>
           )}
-          {currentUser && <span onClick={() => signOut()}>Log Out</span>}
+          {currentUser && (
+            <span
+              className="font-bold font-data text-xl mr-5 hover:text-[#9F7C60] cursor-pointer"
+              onClick={() => signOut()}
+            >
+              Log Out
+            </span>
+          )}
           <div className="flex justify-center items-center relative">
-
-          <FontAwesomeIcon
-            className="text-white rounded-[50%] text-xl p-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 mr-5"
-            icon={faShoppingCart}
-            onClick={handleClickCart}
-          ></FontAwesomeIcon>
-          {countItems > 0 && <span className="w-[20px] h-[20px] rounded-[50%] flex items-center justify-center top-0 bg-[red] absolute text-white">{countItems}</span>}
+            <FontAwesomeIcon
+              className="text-white rounded-[50%] text-xl p-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 mr-5"
+              icon={faShoppingCart}
+              onClick={handleClickCart}
+            ></FontAwesomeIcon>
+            {countItems > 0 && (
+              <span className="w-[20px] h-[20px] rounded-[50%] flex items-center justify-center top-0 bg-[red] absolute text-white">
+                {countItems}
+              </span>
+            )}
           </div>
-         
         </div>
       </header>
     </Fragment>

@@ -19,13 +19,16 @@ const mapState = ({ productsData, cartData }) => ({
 const ProductView = () => {
   // const dataProduct = useSelector((state) => state.productState);
   const { product, chooseColor, chooseSize, cartItems } = useSelector(mapState);
+
   const dispatch = useDispatch();
   function handleCloseModal(e) {
     dispatch(resetViewProduct());
   }
+
   function handleClickOutModal(e) {
     if (e.target.matches(".modal")) dispatch(resetViewProduct());
   }
+
   function handleAddToCart(e) {
     const checkSpan = e.target.parentNode.querySelector("span");
     checkSpan && e.target.parentNode.removeChild(checkSpan);
@@ -60,7 +63,7 @@ const ProductView = () => {
         const cloneObject = JSON.parse(JSON.stringify(product));
         cloneObject.chooseColor = chooseColor;
         cloneObject.chooseSize = chooseSize;
-        cloneObject.quantity=1;
+        cloneObject.quantity = 1;
         dispatch(addCartNew(cloneObject));
       }
       dispatch(resetAfterAddCart());
@@ -82,6 +85,18 @@ const ProductView = () => {
           "border-solid",
           "border-blue-600"
         );
+
+      const template = `<div class="notifi flex w-200px h-100px bg-white shadow-lg right-[15px] bottom-[15px] absolute px-4 py-3 rounded-lg tablet768:bottom-[40%] tablet768:text-sm">
+      <img src="https://cdn-icons.flaticon.com/png/128/5610/premium/5610944.png?token=exp=1655299618~hmac=7cd444900f71a39a6867adea80fd07f8" alt="" 
+      class="w-[20px] h-[20px]"/>
+        <span>Add to cart successful</span>
+      </div>`;
+      const modal = document.querySelector(".modal-content");
+      modal.insertAdjacentHTML("afterbegin", template);
+      setTimeout(() => {
+        const item = modal.firstChild;
+        item.parentNode.removeChild(item);
+      }, 2000);
     }
   }
   return (
@@ -89,7 +104,10 @@ const ProductView = () => {
       className="modal fixed z-[10000] bg-[#ccc] bg-opacity-50 top-0 left-0 right-0 bottom-0 w-full h-full flex items-center justify-center"
       onClick={handleClickOutModal}
     >
-      <div className="modal-content bg-slate-500 shadow-xl w-[850px] h-[400px] flex gap-3 justify-around items-center py-10 rounded-xl   right-[0] relative">
+      <div
+        className="modal-content bg-slate-500 shadow-xl w-[850px] h-[400px] flex gap-3 justify-around items-center py-10 rounded-xl   right-[0] relative
+      tablet768:flex-col tablet768:h-[400px] tablet768:w-[310px] tablet768:p-5"
+      >
         <FontAwesomeIcon
           icon={faClose}
           className="absolute right-0 top-0 text-3xl text-white mt-5 mr-5"
@@ -98,10 +116,10 @@ const ProductView = () => {
         <img
           src={product.image}
           alt=""
-          className="w-[30%] h-[80%] rounded-xl"
+          className="w-[30%] h-[80%] rounded-xl tablet768:w-[80px] tablet768:h-[80px]"
         />
-        <div className="product-content flex flex-col gap-3 w-[360px]">
-          <span className="font-bold text-white text-[28px]">
+        <div className="product-content flex flex-col gap-3 w-[360px] tablet768:w-[310px] tablet768:justify-center tablet768:items-center">
+          <span className="font-bold text-white text-[28px] tablet768:text-xs">
             {product.name}
           </span>
           <span className=" text-white text-[24px] font-pop">

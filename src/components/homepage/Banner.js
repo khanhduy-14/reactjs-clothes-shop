@@ -7,6 +7,7 @@ import "swiper/scss/pagination";
 import "./swiper.scss";
 import "swiper/scss";
 import { collection, onSnapshot } from "firebase/firestore";
+import { fetchTrendsStart } from "../../redux2/Trend/trendAction";
 // import { db } from "../../firebase/firebase-config";
 import BannerImageItem from "./BannerImageItem";
 import triangle from "../../assets/images/triangle.png";
@@ -14,24 +15,17 @@ import Spinner from "../Spinner";
 import { Link } from "react-router-dom";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
+const mapState = ({ trendData }) => ({
+  trends: trendData.trends,
+  loading: trendData.loading,
+});
 
 const Banner = () => {
-  // const { data: trend, loading } = useSelector((state) => state.trendState);
-  // const dispatch = useDispatch();
-
-  // const colRef = collection(db, "trendShoes");
-
-  // useEffect(() => {
-  //   dispatch({ type: `trend/fetch_request` });
-
-  //   let dataLink = [];
-  //   onSnapshot(colRef, (snapshot) => {
-  //     snapshot.docs.forEach((doc) => {
-  //       dataLink.push({ id: doc.id, ...doc.data() });
-  //     });
-  //     dispatch({ type: "trend/fetch_success", payload: dataLink });
-  //   });
-  // }, [dispatch]);
+  const dispatch = useDispatch();
+  const { trends, loading } = useSelector(mapState);
+  useEffect(() => {
+    dispatch(fetchTrendsStart());
+  }, []);
 
   return (
     <div className="home-main relative bg-gradient-to-r from-violet-500 to-fuchsia-500 h-[660px] md:h-[780px] res600:h-[1000px] ">
@@ -63,18 +57,17 @@ const Banner = () => {
             Get the Latest Models From Us
           </h1>
           <Link to="/products">
-
-          <button
-            className="banner-button relative text-white rounded-lg px-8 py-3 font-pop text-bold text-2xl inline-block
+            <button
+              className="banner-button relative text-white rounded-lg px-8 py-3 font-pop text-bold text-2xl inline-block
             before:banner-[''] before:absolute before:top-0 before:left-0 before:w-[60px] before:h-[60px]  before:bg-[#2196f3] before:rounded-[50px] before:z-[-1]
             before:hover:w-full before:hover:text-[#A055F4] before:hover:bg-[#2196f3] before:transition-all before:ease-linear  before:duration-500
             md:mx-auto"
-          >
-            Shop Now
-          </button>
+            >
+              Shop Now
+            </button>
           </Link>
         </div>
-        {/* <div className="banner-swiper w-[480px]  h-[440px] flex items-center justify-center relative res600:w-[320px]">
+        <div className="banner-swiper w-[480px]  h-[440px] flex items-center justify-center relative res600:w-[320px]">
           {loading && <Spinner />}
           <Swiper
             grabCursor={"true"}
@@ -86,14 +79,14 @@ const Banner = () => {
               disableOnInteraction: false,
             }}
           >
-            {trend.length > 0 &&
-              trend.map((item) => (
+            {trends.length > 0 &&
+              trends.map((item) => (
                 <SwiperSlide key={item.id}>
                   <BannerImageItem link={item.linkImage}></BannerImageItem>
                 </SwiperSlide>
               ))}
           </Swiper>
-        </div> */}
+        </div>
       </div>
     </div>
   );

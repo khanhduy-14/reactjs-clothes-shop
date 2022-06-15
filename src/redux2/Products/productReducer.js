@@ -52,6 +52,7 @@ const productReducer = (state = INITIAL_STATE, action) => {
         ...state,
         chooseSize: action.payload,
       };
+      
     default:
       return state;
   }

@@ -27,7 +27,7 @@ dispatch(clearCart());
       className="modal fixed z-[10000] bg-[#ccc] bg-opacity-50 top-0 left-0 right-0 bottom-0 w-full h-full flex justify-center items-center"
       onClick={handleClickOutModal}
     >
-      <div className="cart bg-slate-500 w-[500px] h-[500px] rounded-lg text-white">
+      <div className="cart bg-slate-500 w-[500px] h-[500px] rounded-lg text-white res600:w-[310px] res600:text-sm">
         <div className="h-[100px] flex items-center justify-around ">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 border border-blue-700 rounded w-[120px]"
@@ -58,8 +58,8 @@ dispatch(clearCart());
             ))}
         </div>
         {cartItems.length > 0 && (
-          <div className="border-t-2 mt-3 border-[#000] flex items-center justify-around h-[100px]">
-            <span className="font-mada font-bold text-xl">
+          <div className="border-t-2 mt-3 border-[#000] flex items-center justify-around h-[100px] ">
+            <span className="font-mada font-bold text-xl res600:font-thin res600:text-sm">
               Subtotal Amout: {cartPrice}$
             </span>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 border border-blue-700 rounded w-[120px]">

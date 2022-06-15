@@ -59,7 +59,7 @@ const Footer = () => {
           </a>
 
           <a
-            href="https://github.com/thkduy2001"
+            href="https://github.com/tranhakhanhduy"
             className="text-white-500 hover:text-white-900 dark:hover:text-white"
           >
             <svg

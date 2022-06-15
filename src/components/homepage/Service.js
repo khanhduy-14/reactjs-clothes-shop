@@ -34,7 +34,7 @@ const Service = () => {
         </div>
         <div className="service-itemcontent h-[200px] w-[200px] flex flex-col justify-center items-center">
           <img
-            src="https://cdn-icons.flaticon.com/png/512/3585/premium/3585031.png?token=exp=1654746028~hmac=f73fab165cc4f12827ba1c4d9388bd95"
+            src="https://cdn-icons-png.flaticon.com/512/2856/2856875.png"
             alt=""
             className="h-[80px] w-[80px] object-cover res600:w-[50px] res600:h-[50px]"
           />

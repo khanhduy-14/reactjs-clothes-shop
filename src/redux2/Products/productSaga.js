@@ -1,7 +1,11 @@
 import { takeLatest, put, all, call } from "redux-saga/effects";
-import { setProducts, viewProduct } from "./productAction";
+import { fetchProductsStart, setProducts, viewProduct } from "./productAction";
 import productTypes from "./productTypes";
-import { handleFetchProducts } from "./productHelper";
+import {
+  handleAddProduct,
+  handleDeleteProduct,
+  handleFetchProducts,
+} from "./productHelper";
 
 export function* fetchProducts() {
   try {
@@ -27,6 +31,42 @@ export function* onViewProductStart() {
   yield takeLatest(productTypes.VIEW_PRODUCT_START, handleViewProduct);
 }
 
+export function* addProduct({ payload: { name, image, price, color, size } }) {
+  try {
+    yield handleAddProduct({
+      name,
+      image,
+      price,
+      color,
+      size,
+    });
+    yield put(fetchProductsStart());
+  } catch (err) {
+    // console.log(err);
+  }
+}
+
+export function* onAddProductStart() {
+  yield takeLatest(productTypes.ADD_NEW_PRODUCT_START, addProduct);
+}
+export function* deleteProduct({ payload }) {
+  try {
+    yield handleDeleteProduct(payload);
+    yield put(fetchProductsStart());
+  } catch (err) {
+    // console.log(err);
+  }
+}
+
+export function* onDeleteProductStart() {
+  yield takeLatest(productTypes.DELETE_PRODUCT_START, deleteProduct);
+}
+
 export default function* productSaga() {
-  yield all([call(onFetchProductsStart), call(onViewProductStart)]);
+  yield all([
+    call(onFetchProductsStart),
+    call(onViewProductStart),
+    call(onAddProductStart),
+    call(onDeleteProductStart),
+  ]);
 }

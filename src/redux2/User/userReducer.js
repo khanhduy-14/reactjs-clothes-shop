@@ -17,7 +17,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case userTypes.SIGN_OUT_USER_SUCCESS:
       return {
         ...state,
-        INITIAL_STATE,
+        currentUser:null,
+        resetPasswordSuccess:false
       };
     case userTypes.USER_ERROR:
       return {

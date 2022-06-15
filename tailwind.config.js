@@ -26,10 +26,9 @@ module.exports = {
         md: { max: "1023px" },
         tablet768: { max: "767px" },
         res600: { max: "599px" },
+        res1024: { max: "1023px" },
       },
     },
   },
-  plugins: [
-
-  ],
+  plugins: [],
 };
