@@ -17,7 +17,10 @@ const Footer = () => {
       <div className="sm:flex sm:items-center sm:justify-between">
         <span className="text-sm text-white-500 sm:text-center dark:text-white-400">
           © 2022{" "}
-          <a href="https://flowbite.com" className="hover:underline">
+          <a
+            href="https://github.com/tranhakhanhduy"
+            className="hover:underline"
+          >
             KhanhDuy
           </a>
           . All Rights Reserved.
