@@ -19,30 +19,40 @@ export const viewProduct = (product) => ({
   payload: product,
 });
 
-export const resetViewProduct=()=>({
-  type:productTypes.RESET_VIEW_PRODUCT
+export const resetViewProduct = () => ({
+  type: productTypes.RESET_VIEW_PRODUCT,
 });
 
-export const chooseColor=(color)=>({
-  type:productTypes.CHOOSE_COLOR,
-  payload:color,
-})
-
-export const chooseSize=(size)=>({
-  type:productTypes.CHOOSE_SIZE,
-  payload:size,
-})
-
-export const resetAfterAddCart=()=>({
-type: productTypes.RESET_AFTER_ADD_CART,
+export const chooseColor = (color) => ({
+  type: productTypes.CHOOSE_COLOR,
+  payload: color,
 });
 
-export const addProductStart = productData => ({
+export const chooseSize = (size) => ({
+  type: productTypes.CHOOSE_SIZE,
+  payload: size,
+});
+
+export const resetAfterAddCart = () => ({
+  type: productTypes.RESET_AFTER_ADD_CART,
+});
+
+export const addProductStart = (productData) => ({
   type: productTypes.ADD_NEW_PRODUCT_START,
-  payload: productData
+  payload: productData,
 });
 
-export const deleteProductStart = productID => ({
+export const deleteProductStart = (productID) => ({
   type: productTypes.DELETE_PRODUCT_START,
-  payload: productID
+  payload: productID,
+});
+
+export const updateProductStart = (product) => ({
+  type: productTypes.UPDATE_PRODUCT_START,
+  payload: product,
+});
+
+export const updateProduct = (product) => ({
+  type: productTypes.UPDATE_PRODUCT,
+  payload: product,
 });

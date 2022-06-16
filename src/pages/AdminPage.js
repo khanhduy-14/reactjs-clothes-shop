@@ -7,17 +7,24 @@ import ReactPaginate from "react-paginate";
 import {
   addProductStart,
   deleteProductStart,
+  updateProductStart,
 } from "../redux2/Products/productAction";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faRefresh } from "@fortawesome/free-solid-svg-icons";
 
-const mapState = ({ productsData }) => ({
+const mapState = ({ productsData, user }) => ({
   products: productsData.products,
+  currentUser: user.currentUser,
 });
 
 const AdminPage = (props) => {
   const dispatch = useDispatch();
-  const { products } = useSelector(mapState);
+  const { products, currentUser } = useSelector(mapState);
+  let role = [];
+  if (currentUser && Array.isArray(currentUser.userRoles)) {
+    const { userRoles } = currentUser;
+    role = userRoles;
+  }
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState(0);
@@ -75,114 +82,121 @@ const AdminPage = (props) => {
           ADMIN PAGE
         </span>
       </div>
-      <div className="flex h-[800px] w-full items-center justify-center flex-col gap-3">
-        
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <FormInput
-            type="text"
-            value={name}
-            placeholder="Name Product"
-            handleChange={(e) => setName(e.target.value)}
-            className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
-          />
-          <FormInput
-            type="url"
-            value={image}
-            placeholder="Link Image"
-            handleChange={(e) => setImage(e.target.value)}
-            className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
-          />
-          <FormInput
-            type="number"
-            value={price}
-            min="0.00"
-            max="10000.00"
-            step="1"
-            placeholder="Price"
-            handleChange={(e) => setPrice(e.target.value)}
-            className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
-          />
-          <FormInput
-            type="text"
-            value={colorarr}
-            placeholder="Colors"
-            handleChange={(e) => setColorArr(e.target.value)}
-            className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
-          />
-          <FormInput
-            type="text"
-            value={sizearr}
-            placeholder="Sizes"
-            handleChange={(e) => setSizeArr(e.target.value)}
-            className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
-          />
-         <button className="res600:self-center res600:mx-auto shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-center px-8 py-3 rounded-xl hover:opacity-80">
-            Add Product
-          </button>
-        </form>
-        <div className="h-[400px] overflow-auto flex flex-col gap-3">
-          {currentItems.length > 0 &&
-            currentItems.map((item) => (
-              <div
-                key={item.id}
-                className="flex flex-col justify-around items-center w-[310px] text-sm border-2 border-solid gap-2 border-black rounded-lg"
-              >
-                <span>{item.name}</span>
-                <div className="flex justify-around w-full items-center">
-                  <img
-                    src={item.image}
-                    alt=""
-                    className="w-[40px] h-[40px] rounded-xl object-cover"
-                  />
-                  <div className="flex gap-3">
-                    <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      onClick={() => dispatch(deleteProductStart(item.id))}
-                    ></FontAwesomeIcon>
-                  </div>
-                </div>
-                <div className="flex  gap-3 justify-around items-center bg-slate-400 w-full">
-                  <div className="flex gap-2">
-                    <span>Color:</span>
+      {role.includes("admin") && (
+        <div className="flex h-[800px] w-full items-center justify-center flex-col gap-3">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <FormInput
+              type="text"
+              value={name}
+              placeholder="Name Product"
+              handleChange={(e) => setName(e.target.value)}
+              className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+            />
+            <FormInput
+              type="url"
+              value={image}
+              placeholder="Link Image"
+              handleChange={(e) => setImage(e.target.value)}
+              className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+            />
+            <FormInput
+              type="number"
+              value={price}
+              min="0.00"
+              max="10000.00"
+              step="1"
+              placeholder="Price"
+              handleChange={(e) => setPrice(e.target.value)}
+              className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+            />
+            <FormInput
+              type="text"
+              value={colorarr}
+              placeholder="Colors"
+              handleChange={(e) => setColorArr(e.target.value)}
+              className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+            />
+            <FormInput
+              type="text"
+              value={sizearr}
+              placeholder="Sizes"
+              handleChange={(e) => setSizeArr(e.target.value)}
+              className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+            />
+            <button className="res600:self-center res600:mx-auto shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-center px-8 py-3 rounded-xl hover:opacity-80">
+              Add Product
+            </button>
+          </form>
+          <div className="h-[400px] overflow-auto flex flex-col gap-3">
+            {currentItems.length > 0 &&
+              currentItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex flex-col justify-around items-center w-[310px] text-sm border-2 border-solid gap-2 border-black rounded-lg"
+                >
+                  <span>{item.name}</span>
+                  <div className="flex justify-around w-full items-center">
+                    <img
+                      src={item.image}
+                      alt=""
+                      className="w-[40px] h-[40px] rounded-xl object-cover"
+                    />
+                    <div className="flex gap-3">
+                      <Link to="/updateproduct">
+                        <FontAwesomeIcon
+                          icon={faRefresh}
+                          onClick={() => dispatch(updateProductStart(item))}
+                        ></FontAwesomeIcon>
+                      </Link>
 
-                    {item.color.map((color) => (
-                      <div
-                        className="color-pick order-color-check w-5 h-5 rounded-full shadow-xl"
-                        style={{ backgroundColor: color }}
-                        key={color}
-                      ></div>
-                    ))}
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={() => dispatch(deleteProductStart(item.id))}
+                      ></FontAwesomeIcon>
+                    </div>
                   </div>
-                  <div className="flex gap-2">
-                    <span>Size:</span>
-                    {item.size.map((size) => (
-                      <span key={size} className="pointer-events-none">
-                        {size}
-                      </span>
-                    ))}
+                  <div className="flex  gap-3 justify-around items-center bg-slate-400 w-full">
+                    <div className="flex gap-2">
+                      <span>Color:</span>
+
+                      {item.color.map((color) => (
+                        <div
+                          className="color-pick order-color-check w-5 h-5 rounded-full shadow-xl"
+                          style={{ backgroundColor: color }}
+                          key={color}
+                        ></div>
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <span>Size:</span>
+                      {item.size.map((size) => (
+                        <span key={size} className="pointer-events-none">
+                          {size}
+                        </span>
+                      ))}
+                    </div>
                   </div>
+                  <span>{item.price}$</span>
                 </div>
-                <span>{item.price}$</span>
-              </div>
-            ))}
+              ))}
+          </div>
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="next >"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="< previous"
+            renderOnZeroPageCount={null}
+            containerClassName="pagination"
+            pageLinkClassName="page-num border-2 border-black border-solid px-3 py-2  text-black bg-slate-400 hover:opacity-70"
+            previousLinkClassName="page-num border-2 border-black border-solid px-3 py-2  text-black bg-slate-400 hover:opacity-70"
+            nextLinkClassName="page-num border-2 border-black border-solid px-3 py-2  text-black bg-slate-400 hover:opacity-70"
+            activeLinkClassName="active bg-[#A055F4] text-white"
+            className="flex gap-3"
+          />
         </div>
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="next >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel="< previous"
-          renderOnZeroPageCount={null}
-          containerClassName="pagination"
-          pageLinkClassName="page-num border-2 border-black border-solid px-3 py-2  text-black bg-slate-400 hover:opacity-70"
-          previousLinkClassName="page-num border-2 border-black border-solid px-3 py-2  text-black bg-slate-400 hover:opacity-70"
-          nextLinkClassName="page-num border-2 border-black border-solid px-3 py-2  text-black bg-slate-400 hover:opacity-70"
-          activeLinkClassName="active bg-[#A055F4] text-white"
-          className="flex gap-3"
-        />
-      </div>
+      )}
     </>
   );
 };

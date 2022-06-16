@@ -14,6 +14,28 @@ export const handleAddProduct = (product) => {
   });
 };
 
+export const handleUpdateProduct = (product) => {
+  console.log(product);
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("product")
+      .doc(product.id)
+      .update({
+        name:product.name,
+        image:product.image,
+        price:product.price,
+        size:product.size,
+        color:product.color,
+      })
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
 export const handleFetchProducts = () => {
   return new Promise((resolve, reject) => {
     firestore

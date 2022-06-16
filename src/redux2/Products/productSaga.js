@@ -5,6 +5,7 @@ import {
   handleAddProduct,
   handleDeleteProduct,
   handleFetchProducts,
+  handleUpdateProduct,
 } from "./productHelper";
 
 export function* fetchProducts() {
@@ -58,6 +59,29 @@ export function* deleteProduct({ payload }) {
   }
 }
 
+export function* updateProduct({
+  payload: { id, name, image, price, color, size },
+}) {
+  try {
+    yield handleUpdateProduct({
+      id,
+      name,
+      image,
+      price,
+      color,
+      size,
+    });
+    yield put(fetchProductsStart());
+    window.location.href = "/admin";
+  } catch (err) {
+    // console.log(err);
+  }
+}
+
+export function* onUpdateProductStart() {
+  yield takeLatest(productTypes.UPDATE_PRODUCT, updateProduct);
+}
+
 export function* onDeleteProductStart() {
   yield takeLatest(productTypes.DELETE_PRODUCT_START, deleteProduct);
 }
@@ -68,5 +92,6 @@ export default function* productSaga() {
     call(onViewProductStart),
     call(onAddProductStart),
     call(onDeleteProductStart),
+    call(onUpdateProductStart),
   ]);
 }

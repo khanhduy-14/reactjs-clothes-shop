@@ -2,6 +2,7 @@ import { Fragment, lazy, Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Spinner from "./components/Spinner";
+import UpdateProductPage from "./pages/UpdateProductPage";
 
 import { checkUserSession } from "./redux2/User/userActions";
 
@@ -51,6 +52,10 @@ const App = (props) => {
             <Route
               path="/aboutus"
               element={<AboutUsPage></AboutUsPage>}
+            ></Route>
+              <Route
+              path="/updateproduct"
+              element={<UpdateProductPage></UpdateProductPage>}
             ></Route>
           </Route>
         </Routes>

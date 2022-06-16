@@ -3,6 +3,7 @@ import productTypes from "./productTypes";
 const INITIAL_STATE = {
   products: [],
   product: [],
+  updateproduct: [],
   viewProduct: false,
   loading: false,
   chooseColor: null,
@@ -36,12 +37,12 @@ const productReducer = (state = INITIAL_STATE, action) => {
         chooseColor: null,
         chooseSize: null,
       };
-      case productTypes.RESET_AFTER_ADD_CART:
-        return {
-          ...state,
-          chooseColor: null,
-          chooseSize: null,
-        };
+    case productTypes.RESET_AFTER_ADD_CART:
+      return {
+        ...state,
+        chooseColor: null,
+        chooseSize: null,
+      };
     case productTypes.CHOOSE_COLOR:
       return {
         ...state,
@@ -52,7 +53,12 @@ const productReducer = (state = INITIAL_STATE, action) => {
         ...state,
         chooseSize: action.payload,
       };
-      
+    case productTypes.UPDATE_PRODUCT_START:
+      return {
+        ...state,
+        updateproduct: action.payload,
+      };
+
     default:
       return state;
   }
