@@ -18,7 +18,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser:null,
-        resetPasswordSuccess:false
+        resetPasswordSuccess:false,
       };
     case userTypes.USER_ERROR:
       return {
@@ -28,8 +28,15 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case userTypes.RESET_PASSWORD_SUCCESS:
       return {
         ...state,
-        resetPasswordSuccess: action.payload,
+        resetPasswordSuccess: true,
+        
       };
+      case userTypes.RESET_STATE_RESETPASS:
+        return {
+          ...state,
+          resetPasswordSuccess: false,
+          userErr: [],
+        };
     default:
       return state;
   }

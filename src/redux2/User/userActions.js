@@ -50,3 +50,7 @@ export const resetPasswordSuccess = () => ({
 export const googleSignInStart = () => ({
   type: userTypes.GOOGLE_SIGN_IN_START,
 });
+
+export const resetStateResetPass = () => ({
+  type: userTypes.RESET_STATE_RESETPASS,
+});

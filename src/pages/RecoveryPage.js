@@ -7,14 +7,21 @@ import { resetPasswordStart } from "./../redux2/User/userActions";
 const mapState = ({ user }) => ({
   resetPasswordSuccess: user.resetPasswordSuccess,
   userErr: user.userErr,
+  currentUser: user.currentUser,
 });
 
 const RecoveryPage = (props) => {
   const { resetPasswordSuccess, userErr } = useSelector(mapState);
   const dispatch = useDispatch();
+  const { currentUser } = useSelector(mapState);
+
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState([]);
-
+  useEffect(() => {
+    if (currentUser) {
+      window.location.href = "/";
+    }
+  }, [currentUser]);
   useEffect(() => {
     if (resetPasswordSuccess) {
       window.location.href = "/login";
@@ -43,8 +50,11 @@ const RecoveryPage = (props) => {
       <div className="flex h-[330px] p-5 border-black w-full items-center justify-center flex-col gap-4">
         {errors.length > 0 &&
           errors.map((item, index) => (
-            <span className="font-bold font-mada text-xl" key={index}>
-              {item}
+            <span
+              className="font-bold font-mada text-sm text-red-600"
+              key={index}
+            >
+              *{item}
             </span>
           ))}
         <form onSubmit={handleFormSubmit} className="flex flex-col gap-3">

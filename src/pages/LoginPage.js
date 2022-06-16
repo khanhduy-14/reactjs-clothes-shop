@@ -5,6 +5,7 @@ import FormInput from "../components/forms/FormInput";
 import {
   emailSignInStart,
   googleSignInStart,
+  resetStateResetPass,
 } from "./../redux2/User/userActions";
 
 const mapState = ({ user }) => ({
@@ -15,7 +16,7 @@ const LoginPage = (props) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, setError] = useState("");
   useEffect(() => {
     if (currentUser) {
       resetForm();
@@ -26,9 +27,19 @@ const LoginPage = (props) => {
     setEmail("");
     setPassword("");
   };
+  useEffect(() => {
+    dispatch(resetStateResetPass());
+  },[]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(emailSignInStart({ email, password }));
+    if (!email || !password) {
+      setError("Email and password cannot be blank");
+    }
+    if (email && password) {
+      dispatch(emailSignInStart({ email, password }));
+
+      setError("");
+    }
   };
   const handleGoogleSignIn = () => {
     dispatch(googleSignInStart());
@@ -42,54 +53,54 @@ const LoginPage = (props) => {
         </span>
       </div>
       <div className="w-full flex items-center justify-center h-[600px]">
-
-      <div className="flex p-5 w-[320px] items-center justify-center flex-col gap-3 border-2 border-black rounded-lg">
-        <div
-          className=" res600:self-center res600:mx-auto shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-center px-14 py-3 hover:opacity-80 text-xl border-[1px] border-solid  rounded-xl"
-          onClick={handleGoogleSignIn}
-        >
-          Login with google
-        </div>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <FormInput
-            type="email"
-            name="email"
-            value={email}
-            placeholder="Email"
-            handleChange={(e) => setEmail(e.target.value)}
-            className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
-
-          />
-          <FormInput
-            type="password"
-            name="password"
-            value={password}
-            placeholder="Password"
-            handleChange={(e) => setPassword(e.target.value)}
-            className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
-
-          />
-          <div className="flex justify-center">
-
-         <button className="res600:self-center res600:mx-auto shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-center px-5 w-[120px] py-3 rounded-xl hover:opacity-80">
-            Sign In
-          </button>
+        <div className="flex p-5 w-[320px] items-center justify-center flex-col gap-3 border-2 border-black rounded-lg">
+          <div
+            className=" res600:self-center res600:mx-auto shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-center px-14 py-3 hover:opacity-80 text-xl border-[1px] border-solid  rounded-xl"
+            onClick={handleGoogleSignIn}
+          >
+            Login with google
           </div>
-        </form>
-        <div className="flex flex-col gap-3">
-          <Link to="/recovery">
-            <span className="text-blue-500">You forgot password?</span>
-          </Link>
-          <div>
-            <span>You don't have accout? Please </span>
-            <Link to="/signup">
-              <span className="text-blue-500">sign up</span>
+          {error && (
+            <span className="font-bold font-mada text-sm text-red-600">
+              *{error}
+            </span>
+          )}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <FormInput
+              type="email"
+              name="email"
+              value={email}
+              placeholder="Email"
+              handleChange={(e) => setEmail(e.target.value)}
+              className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+            />
+            <FormInput
+              type="password"
+              name="password"
+              value={password}
+              placeholder="Password"
+              handleChange={(e) => setPassword(e.target.value)}
+              className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+            />
+            <div className="flex justify-center">
+              <button className="res600:self-center res600:mx-auto shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-center px-5 w-[120px] py-3 rounded-xl hover:opacity-80">
+                Sign In
+              </button>
+            </div>
+          </form>
+          <div className="flex flex-col gap-3">
+            <Link to="/recovery">
+              <span className="text-blue-500">You forgot password?</span>
             </Link>
+            <div>
+              <span>You don't have accout? Please </span>
+              <Link to="/signup">
+                <span className="text-blue-500">sign up</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-      </div>
-
     </>
   );
 };

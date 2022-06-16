@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CartItems from "./CartItems";
 import { closeCartItems ,clearCart} from "../../redux2/Cart/cartAction";
+import { Link } from "react-router-dom";
 
 const mapState = ({ productsData, cartData }) => ({
   products: productsData.products,
@@ -62,9 +63,12 @@ dispatch(clearCart());
             <span className="font-mada font-bold text-xl res600:font-thin res600:text-sm">
               Subtotal Amout: {cartPrice}$
             </span>
+            <Link to="/checkout">
+
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 border border-blue-700 rounded w-[120px]">
               Check Out
             </button>
+            </Link>
           </div>
         )}
       </div>

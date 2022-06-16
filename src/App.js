@@ -1,16 +1,19 @@
 import { Fragment, lazy, Suspense, useEffect } from "react";
-import { Provider, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation, Navigate } from "react-router-dom";
-import Main from "./components/layouts/Main";
 import Spinner from "./components/Spinner";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import AdminPage from "./pages/AdminPage";
-import RecoveryPage from "./pages/RecoveryPage";
+
 import { checkUserSession } from "./redux2/User/userActions";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
+const Main = lazy(() => import("./components/layouts/Main"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const SignupPage = lazy(() => import("./pages/SignupPage"));
+const AdminPage = lazy(() => import("./pages/AdminPage"));
+const RecoveryPage = lazy(() => import("./pages/RecoveryPage"));
+const AboutUsPage = lazy(() => import("./pages/AboutUsPage"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 const App = (props) => {
   useScrollToTop();
@@ -24,6 +27,7 @@ const App = (props) => {
     <Fragment>
       <Suspense fallback={<Spinner></Spinner>}>
         <Routes>
+          <Route path="*" element={<NotFoundPage></NotFoundPage>} />
           <Route element={<Main></Main>}>
             <Route
               path="/"
@@ -44,6 +48,10 @@ const App = (props) => {
               element={<RecoveryPage></RecoveryPage>}
             ></Route>
             <Route path="/admin" element={<AdminPage></AdminPage>}></Route>
+            <Route
+              path="/aboutus"
+              element={<AboutUsPage></AboutUsPage>}
+            ></Route>
           </Route>
         </Routes>
       </Suspense>

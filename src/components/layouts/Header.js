@@ -86,12 +86,16 @@ const Header = () => {
           >
             Product
           </NavLink>
-          <span onMouseOver={handleTabEnter} onMouseLeave={handleTabLeave}>
-            About
-          </span>
-          <span onMouseOver={handleTabEnter} onMouseLeave={handleTabLeave}>
-            Contact
-          </span>
+          
+          <NavLink
+            to="/aboutus"
+            onMouseOver={handleTabEnter}
+            onMouseLeave={handleTabLeave}
+            className={({ isActive }) => (isActive ? "text-primary" : "")}
+          >
+            About us
+          </NavLink>
+        
         </div>
         <div className="header-icon flex justify-end items-center res600:mb-5 cursor-pointer">
           {!currentUser && (
