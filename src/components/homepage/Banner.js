@@ -6,7 +6,6 @@ import "swiper/scss/navigation";
 import "swiper/scss/pagination";
 import "./swiper.scss";
 import "swiper/scss";
-import { collection, onSnapshot } from "firebase/firestore";
 import { fetchTrendsStart } from "../../redux2/Trend/trendAction";
 // import { db } from "../../firebase/firebase-config";
 import BannerImageItem from "./BannerImageItem";

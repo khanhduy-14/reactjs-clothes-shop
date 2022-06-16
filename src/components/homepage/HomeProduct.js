@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SwiperCore, { Navigation } from "swiper";
 import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/scss/navigation";
@@ -7,9 +7,7 @@ import "swiper/scss";
 import Spinner from "../Spinner";
 import HomeProductCard from "./HomeProductCard";
 import ProductView from "../product/ProductView";
-import { useDispatch, useSelector } from "react-redux";
-import { handleFetchProducts } from "../../redux2/Products/productHelper";
-import { setProducts } from "./../../redux2/Products/productAction";
+import { useSelector } from "react-redux";
 
 SwiperCore.use([Navigation]);
 
@@ -21,9 +19,6 @@ const mapState = ({ productsData }) => ({
 const HomeProduct = () => {
   const { products, viewProduct, loading } = useSelector(mapState);
 
-
- 
-  
   return (
     <div className="home-product relative bg-gradient-to-r from-violet-500 to-fuchsia-500 h-[660px] flex flex-col justify-center items-center res600:h-[800px]">
       <h1 className="text-white text-[56px] font-bold font-mada mt-10 md:text-[30px] ">

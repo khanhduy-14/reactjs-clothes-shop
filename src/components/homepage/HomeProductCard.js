@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
-import { viewProduct,viewProductStart} from "../../redux2/Products/productAction";
+import { viewProductStart} from "../../redux2/Products/productAction";
 
 const HomeProductCard = ({ item }) => {
   const [hover, setHover] = useState(false);
