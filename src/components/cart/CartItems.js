@@ -48,24 +48,21 @@ const CartItems = ({ item }) => {
       <div className="item-content flex flex-col gap-3 text-mada w-[50%] res600:w-[40%] res600:text-sm">
         <h2 className="font-bold">{item.name}</h2>
         <div className="flex gap-2">
-        <div className="res600:flex-col res600:flex">
-
-          <span className="opacity-80 text-sm">Quantity:</span>
-          <span className="text-sm text-center">{item.quantity}</span>
-        </div>
-        <div className="res600:flex-col res600:flex">
-          <span className="opacity-80 text-sm">Size:</span>
-          <span className="text-sm text-center">{item.chooseSize}</span>
+          <div className="res600:flex-col res600:flex">
+            <span className="opacity-80 text-sm">Quantity: </span>
+            <span className="text-sm text-center">{item.quantity}</span>
           </div>
           <div className="res600:flex-col res600:flex">
-
-          <span className="opacity-80 text-sm">Color:</span>
-          <div
-            className="order-color-check w-5 h-5 rounded-full shadow-xl self-center"
-            style={{ backgroundColor: item.chooseColor }}
-          ></div>
+            <span className="opacity-80 text-sm">Size: </span>
+            <span className="text-sm text-center">{item.chooseSize}</span>
           </div>
-
+          <div className="res600:flex-col res600:flex flex">
+            <span className="opacity-80 text-sm mr-1">Color: </span>
+            <div
+              className="order-color-check w-5 h-5 rounded-full shadow-xl self-center"
+              style={{ backgroundColor: item.chooseColor }}
+            ></div>
+          </div>
         </div>
       </div>
       <span>{item.price * item.quantity}$</span>

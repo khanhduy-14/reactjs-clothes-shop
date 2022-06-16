@@ -1,6 +1,6 @@
 import { Fragment, lazy, Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Routes, useLocation, Navigate } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Spinner from "./components/Spinner";
 
 import { checkUserSession } from "./redux2/User/userActions";

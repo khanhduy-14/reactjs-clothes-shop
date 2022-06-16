@@ -9,7 +9,6 @@ import {
   resetAfterAddCart,
 } from "../../redux2/Products/productAction";
 import { addCartOne, addCartNew } from "../../redux2/Cart/cartAction";
-
 const mapState = ({ productsData, cartData }) => ({
   product: productsData.product,
   chooseColor: productsData.chooseColor,
@@ -87,7 +86,7 @@ const ProductView = () => {
         );
 
       const template = `<div class="notifi flex w-200px h-100px bg-white shadow-lg right-[15px] bottom-[15px] absolute px-4 py-3 rounded-lg tablet768:bottom-[40%] tablet768:text-sm">
-      <img src="https://cdn-icons.flaticon.com/png/128/5610/premium/5610944.png?token=exp=1655299618~hmac=7cd444900f71a39a6867adea80fd07f8" alt="" 
+      <img src="https://img.icons8.com/emoji/344/check-mark-emoji.png" alt="►" 
       class="w-[20px] h-[20px]"/>
         <span>Add to cart successful</span>
       </div>`;
