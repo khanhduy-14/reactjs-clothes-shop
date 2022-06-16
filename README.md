@@ -10,5 +10,5 @@ Simple ecommerce react js app with firebase,tailwindcss.
 
 <details>
   <summary>Homepage</summary>
-![](./readmeimg/homepage1.png)
+![](https://github.com/tranhakhanhduy/KDshop/blob/master/readmeimg/homepage1.PNG)
 </details>
