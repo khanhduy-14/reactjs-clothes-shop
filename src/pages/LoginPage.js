@@ -7,6 +7,8 @@ import {
   googleSignInStart,
   resetStateResetPass,
 } from "./../redux2/User/userActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
@@ -17,6 +19,7 @@ const LoginPage = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isHiddenPassword, setIsHiddenPassword] = useState(true);
   useEffect(() => {
     if (currentUser) {
       resetForm();
@@ -29,7 +32,7 @@ const LoginPage = (props) => {
   };
   useEffect(() => {
     dispatch(resetStateResetPass());
-  },[]);
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -74,14 +77,30 @@ const LoginPage = (props) => {
               handleChange={(e) => setEmail(e.target.value)}
               className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
             />
-            <FormInput
-              type="password"
-              name="password"
-              value={password}
-              placeholder="Password"
-              handleChange={(e) => setPassword(e.target.value)}
-              className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
-            />
+            <div className="relative">
+              <FormInput
+                type={isHiddenPassword ? "password" : "text"}
+                name="password"
+                value={password}
+                placeholder="Password"
+                handleChange={(e) => setPassword(e.target.value)}
+                className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl relative"
+              />
+              {!isHiddenPassword && (
+                <FontAwesomeIcon
+                  icon={faEye}
+                  className="absolute top-[50%] translate-y-[-50%] right-[10px]"
+                  onClick={() => setIsHiddenPassword((prev) => !prev)}
+                ></FontAwesomeIcon>
+              )}
+              {isHiddenPassword && (
+                <FontAwesomeIcon
+                  icon={faEyeSlash}
+                  className="absolute top-[50%] translate-y-[-50%] right-[10px]"
+                  onClick={() => setIsHiddenPassword((prev) => !prev)}
+                ></FontAwesomeIcon>
+              )}
+            </div>
             <div className="flex justify-center">
               <button className="res600:self-center res600:mx-auto shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-center px-5 w-[120px] py-3 rounded-xl hover:opacity-80">
                 Sign In

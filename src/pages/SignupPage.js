@@ -3,6 +3,9 @@ import FormInput from "../components/forms/FormInput";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpUserStart } from "./../redux2/User/userActions";
 import { resetStateResetPass } from "./../redux2/User/userActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
   userErr: user.userErr,
@@ -16,6 +19,9 @@ const SignupPage = (props) => {
   const [confirmPassword, setConfirmPassWord] = useState("");
   const [errors, setErrors] = useState([]);
   const [error, setError] = useState("");
+  const [isHiddenPassword, setIsHiddenPassword] = useState(true);
+  const [isHiddenConfirmPassword, setIsHiddenConfirmPassword] = useState(true);
+
   useEffect(() => {
     if (currentUser) {
       resetForm();
@@ -89,22 +95,54 @@ const SignupPage = (props) => {
             handleChange={(e) => setEmail(e.target.value)}
             className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
           />
-          <FormInput
-            type="password"
-            name="password"
-            value={password}
-            placeholder="Password"
-            handleChange={(e) => setPassword(e.target.value)}
-            className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
-          />
-          <FormInput
-            type="password"
-            name="confirmPassword"
-            value={confirmPassword}
-            placeholder="Confirm Password"
-            handleChange={(e) => setConfirmPassWord(e.target.value)}
-            className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
-          />
+          <div className="relative">
+            <FormInput
+              type={isHiddenPassword?"password":"text"}
+              name="password"
+              value={password}
+              placeholder="Password"
+              handleChange={(e) => setPassword(e.target.value)}
+              className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+            />
+            {!isHiddenPassword && (
+              <FontAwesomeIcon
+                icon={faEye}
+                className="absolute top-[50%] translate-y-[-50%] right-[10px]"
+                onClick={() => setIsHiddenPassword((prev) => !prev)}
+              ></FontAwesomeIcon>
+            )}
+            {isHiddenPassword && (
+              <FontAwesomeIcon
+                icon={faEyeSlash}
+                className="absolute top-[50%] translate-y-[-50%] right-[10px]"
+                onClick={() => setIsHiddenPassword((prev) => !prev)}
+              ></FontAwesomeIcon>
+            )}
+          </div>
+          <div className="relative">
+            <FormInput
+              type={isHiddenConfirmPassword?"password":"text"}
+              name="confirmPassword"
+              value={confirmPassword}
+              placeholder="Confirm Password"
+              handleChange={(e) => setConfirmPassWord(e.target.value)}
+              className="border-2 border-black rounded-lg w-[300px] pl-2 text-xl"
+            />
+            {!isHiddenConfirmPassword && (
+              <FontAwesomeIcon
+                icon={faEye}
+                className="absolute top-[50%] translate-y-[-50%] right-[10px]"
+                onClick={() => setIsHiddenConfirmPassword((prev) => !prev)}
+              ></FontAwesomeIcon>
+            )}
+            {isHiddenConfirmPassword && (
+              <FontAwesomeIcon
+                icon={faEyeSlash}
+                className="absolute top-[50%] translate-y-[-50%] right-[10px]"
+                onClick={() => setIsHiddenConfirmPassword((prev) => !prev)}
+              ></FontAwesomeIcon>
+            )}
+          </div>
           <div className="flex justify-center">
             <button className="res600:self-center res600:mx-auto shadow-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-center px-8 py-3 rounded-xl hover:opacity-80">
               Sign Up

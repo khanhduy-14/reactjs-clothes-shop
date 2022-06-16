@@ -6,6 +6,7 @@ import ProductView from "../components/product/ProductView";
 import ReactPaginate from "react-paginate";
 import FormInput from "../components/forms/FormInput";
 
+
 const mapState = ({ productsData, cartData }) => ({
   products: productsData.products,
   viewProduct: productsData.viewProduct,
