@@ -1,5 +1,5 @@
 # KDShop | E-commerce reactjs app
 Simple ecommerce react js app with firebase,tailwindcss.
-![Firebase Deploy](https://firebase.google.com/downloads/brand-guidelines/SVG/logo-built_white.svg)
+![Firebase Deploy](https://img.icons8.com/color/344/firebase.png) Firebase Deploy
 
 ### [Live demo](https://kdshop-c042b.web.app/)
